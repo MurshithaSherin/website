@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Shodwe - 3D Printing Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3%;
+            max-width: 100%;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4169E1, #1E90FF);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .nav-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav-center a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-center a:hover,
+        .nav-center a.active {
+            color: #1E90FF;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+        }
+
+        .instagram-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 25px;
+            padding: 0.5rem 1.2rem;
+            border: 2px solid #ddd;
+        }
+
+        .search-box input {
+            border: none;
+            background: none;
+            outline: none;
+            padding: 0.3rem 0.5rem;
+            width: 200px;
+            font-size: 0.95rem;
+        }
+
+        .search-icon {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .signup-btn {
+            padding: 0.6rem 1.8rem;
+            background: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .signup-btn:hover {
+            background: #1873CC;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 72px;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+        }
+
+        /* Products Section */
+        .catalogue-section {
+            padding: 4rem 5%;
+            background: white;
+        }
+
+        .catalogue-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #4169E1, #1E90FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Slider */
+        .slider-wrapper {
+            position: relative;
+            max-width: 100%;
+            margin-bottom: 4rem;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .slider-container {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            color: #333;
+        }
+
+        .slider-btn:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-btn.prev {
+            left: 20px;
+        }
+
+        .slider-btn.next {
+            right: 20px;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-category {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #1E90FF;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 0.9rem;
+            background: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .buy-button:hover {
+            background: #1873CC;
+            transform: translateY(-2px);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            text-align: center;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .about-section p {
+            font-size: 1.2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        footer a {
+            color: #1E90FF;
+            text-decoration: none;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-center {
+                display: none;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .slider-container {
+                height: 300px;
+            }
+
+            .catalogue-title {
+                font-size: 2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="nav-left">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span>Studio Shodwe</span>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <a href="#home">Home</a>
+                <a href="#products" class="active">Products</a>
+                <a href="#about">About Us</a>
+            </div>
+            
+            <div class="nav-right">
+                <div class="social-icons">
+                    <a href="https://wa.me/917708700430" target="_blank" class="whatsapp-btn" title="WhatsApp">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/studioshodwe" target="_blank" class="instagram-btn" title="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search products...">
+                </div>
+                <button class="signup-btn">Sign up</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="https://cdn.pixabay.com/video/2019/08/14/25844-353999931_large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="catalogue-section" id="products">
+        <h2 class="catalogue-title">Products Catalogue</h2>
+        
+        <!-- Slider -->
+        <div class="slider-wrapper">
+            <div class="slider-container">
+                <div class="slider" id="slider">
+                    <div class="slide">
+                        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1200&h=500&fit=crop" alt="3D Printer">
+                    </div>
+                    <div class="slide">
+                        <img src="https://images.unsplash.com/photo-1567789884554-0b844b597180?w=1200&h=500&fit=crop" alt="3D Printing Process">
+                    </div>
+                    <div class="slide">
+                        <img src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=1200&h=500&fit=crop" alt="3D Printed Models">
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn prev" onclick="changeSlide(-1)">‹</button>
+            <button class="slider-btn next" onclick="changeSlide(1)">›</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=400&fit=crop" alt="3D Printer">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">FDM 3D Printer Pro</div>
+                    <div class="product-category">3D Printers</div>
+                    <div class="product-price">₹35,999</div>
+                    <button class="buy-button" onclick="buyProduct('FDM 3D Printer Pro', '₹35,999')">Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1635514569146-9a9607ecf303?w=400&h=400&fit=crop" alt="Custom Keychains">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Custom Keychains</div>
+                    <div class="product-category">3D Printed Items</div>
+                    <div class="product-price">₹299</div>
+                    <button class="buy-button" onclick="buyProduct('Custom Keychains', '₹299')">Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=400&fit=crop" alt="Rubber Stamps">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Custom Rubber Stamps</div>
+                    <div class="product-category">Stamps & Seals</div>
+                    <div class="product-price">₹499</div>
+                    <button class="buy-button" onclick="buyProduct('Custom Rubber Stamps', '₹499')">Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=400&h=400&fit=crop" alt="3D Figurines">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Custom 3D Figurines</div>
+                    <div class="product-category">3D Printed Items</div>
+                    <div class="product-price">₹899</div>
+                    <button class="buy-button" onclick="buyProduct('Custom 3D Figurines', '₹899')">Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1633621834282-2c811dc5a5c6?w=400&h=400&fit=crop" alt="PLA Filament">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">PLA Filament Pack</div>
+                    <div class="product-category">Filaments</div>
+                    <div class="product-price">₹1,299</div>
+                    <button class="buy-button" onclick="buyProduct('PLA Filament Pack', '₹1,299')">Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?w=400&h=400&fit=crop" alt="Name Plates">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Custom Name Plates</div>
+                    <div class="product-category">Signage</div>
+                    <div class="product-price">₹699</div>
+                    <button class="buy-button" onclick="buyProduct('Custom Name Plates', '₹699')">Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1567789884554-0b844b597180?w=400&h=400&fit=crop" alt="Phone Cases">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">3D Printed Phone Cases</div>
+                    <div class="product-category">Accessories</div>
+                    <div class="product-price">₹599</div>
+                    <button class="buy-button" onclick="buyProduct('3D Printed Phone Cases', '₹599')">Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1595246140625-573b715d11dc?w=400&h=400&fit=crop" alt="Office Stamps">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Office Stamp Set</div>
+                    <div class="product-category">Stamps & Seals</div>
+                    <div class="product-price">₹1,299</div>
+                    <button class="buy-button" onclick="buyProduct('Office Stamp Set', '₹1,299')">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <h2>About Us</h2>
+        <p>
+            Studio Shodwe is your premier destination for cutting-edge 3D printing solutions, custom keychains, 
+            rubber stamps, and personalized products. We combine innovation with craftsmanship to bring your ideas to life. 
+            Whether you need professional 3D printing services, custom merchandise, or unique promotional items, 
+            we deliver quality products that exceed expectations.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Studio Shodwe. All rights reserved.</p>
+        <p>Contact: <a href="https://wa.me/917708700430">WhatsApp Us</a></p>
+    </footer>
+
+    <script>
+        // Slider functionality
+        let currentSlide = 0;
+        const slider = document.getElementById('slider');
+        const slides = slider.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            if (index >= totalSlides) currentSlide = 0;
+            if (index < 0) currentSlide = totalSlides - 1;
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        // Auto-play slider
+        setInterval(() => {
+            currentSlide++;
+            showSlide(currentSlide);
+        }, 5000);
+
+        // Buy Product function
+        function buyProduct(productName, price) {
+            const message = `Hi! I'm interested in buying:\n\n📦 Product: ${productName}\n💰 Price: ${price}\n\nPlease provide more details.`;
+            const whatsappUrl = `https://wa.me/917708700430?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Update active state
+                document.querySelectorAll('.nav-center a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // Update active nav on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-center a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
